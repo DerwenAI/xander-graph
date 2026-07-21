@@ -4,10 +4,10 @@ from typing import Dict, Iterable, Tuple
 
 from rdflib import URIRef
 
-from ottr.base.argument import InstanceArgument
-from ottr.base.template import AbstractTemplate
-from ottr.base.utils import OTTR_TRIPLE_URI
-from ottr.types import ExpansionResults, InputBindings
+from ... ottr.base.argument import InstanceArgument
+from ... ottr.base.template import AbstractTemplate
+from ... ottr.base.utils import OTTR_TRIPLE_URI
+from ... ottr.types import ExpansionResults, InputBindings
 
 
 class OttrTriple(AbstractTemplate):

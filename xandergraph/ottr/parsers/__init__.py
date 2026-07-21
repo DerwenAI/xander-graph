@@ -5,10 +5,9 @@
 """
 from typing import Dict, List, Tuple, Union
 
-from ottr.base.template import AbstractTemplate
-from ottr.parsers.stottr.parser import (parse_instances_stottr,
-                                        parse_templates_stottr)
-from ottr.types import Term
+from ... ottr.base.template import AbstractTemplate
+from .stottr.parser import (parse_instances_stottr, parse_templates_stottr)
+from ... ottr.types import Term
 
 __all__ = [
     'parse_templates',

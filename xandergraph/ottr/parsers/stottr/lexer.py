@@ -19,8 +19,8 @@ def ListOf(content: Group, start_char: str = "(", end_char: str = ")", separator
     # ])
     return Group(Literal(start_char).suppress() + OneOrMore(content + Optional(Literal(separator)).suppress()) + Literal(end_char).suppress())
 
-# ----- General terms ------
 
+# ----- General terms ------
 
 uriref = r'(<([^:]+:[^\s"<>]+)>|(([A-Za-z0-9]|-)+):([A-Za-z0-9]+))'
 literal = r'"([^"\\]*(?:\\.[^"\\]*)*)"'

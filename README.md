@@ -1,2 +1,4 @@
-# xander-graph
-used internally for graph representation and system integration
+# xandergraph
+
+Used internally for graph representation and system integration.
+

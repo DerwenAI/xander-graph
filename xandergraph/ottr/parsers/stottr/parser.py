@@ -1,5 +1,6 @@
 # parser.py
 # Author: Thomas MINIER - MIT License 2019
+
 from typing import Dict, List, Tuple, Union
 
 from pyparsing import Group
@@ -7,15 +8,13 @@ from rdflib import Graph, URIRef, Variable
 from rdflib.namespace import RDFS, NamespaceManager
 from rdflib.util import from_n3
 
-from ottr.base.argument import (ConcreteArgument, InstanceArgument,
-                                VariableArgument)
-from ottr.base.base_templates import OttrTriple
-from ottr.base.expansion import CrossTemplate
-from ottr.base.template import AbstractTemplate, MainTemplate, NonBaseInstance
-from ottr.base.utils import OTTR_NONE, OTTR_TRIPLE_URI
-from ottr.parsers.stottr.lexer import (lex_instances_stottr,
-                                       lex_templates_stottr)
-from ottr.types import Term
+from ... base.utils import OTTR_NONE, OTTR_TRIPLE_URI
+from ... base.argument import (ConcreteArgument, InstanceArgument, VariableArgument)
+from ... base.base_templates import OttrTriple
+from ... base.expansion import CrossTemplate
+from ... base.template import AbstractTemplate, MainTemplate, NonBaseInstance
+from ... types import Term
+from .lexer import (lex_instances_stottr, lex_templates_stottr)
 
 # All base templates are registered here,
 # as tuples (template constructor, expected nb of arguments)

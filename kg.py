@@ -9,63 +9,18 @@ import pathlib
 import sys
 
 from icecream import ic
-import ottr
+import xandergraph as xg
 import pyshacl
 import rdflib
 
 
-class KnowledgeGraph:
-    """
-Represents a knowledge graph, with accessors for both the `RDFlib`
-semantic graph and the `NetworkX` property graph.
-    """
-    def __init__ (
-        self,
-        ) -> None:
-        """
-Constructor.
-        """
-        self.graph: rdflib.Graph = rdflib.Graph()
-        self.graph.bind("bwyd", rdflib.Namespace("https://github.com/DerwenAI/bwyd/wiki/ns#"))
-
-        self.ottr_generator: ottr.OttrGenerator = ottr.OttrGenerator()
-
-
-    def load_stottr (
-        self,
-        stottr_path: pathlib.Path,
-        ) -> rdflib.Graph:
-        """
-Define and load the OTTR templates.
-        """
-        with open(stottr_path, "r", encoding = "utf-8") as fp:
-            stottr_template: str = fp.read().strip()
-
-            self.ottr_generator.load_templates(
-                stottr_template,
-                format = "stottr",
-            )
-
-
-    def gen_ottr_rdf (
-        self,
-        rdf_data: str,
-        ) -> rdflib.Graph:
-        """
-Generate RDF triples based on applying the given text data to the
-loaded OTTR templates.
-        """
-        instances: ottr.generator.OttrInstances = self.ottr_generator.instanciate(
-            rdf_data,
-            format = "stottr",
-        )
-
-        for s, p, o in instances.execute(as_nt = False):
-            self.graph.add((s, p, o))
-
-
 if __name__ == "__main__":
-    kg: KnowledgeGraph = KnowledgeGraph()
+    kg: xg.KnowledgeGraph = xg.KnowledgeGraph(
+        ns = {
+            "bwyd": "https://github.com/DerwenAI/bwyd/wiki/ns#",
+        },
+    )
+
     kg.load_stottr(pathlib.Path("bwyd.stottr"))
 
     ## generate models from the data

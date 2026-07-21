@@ -1,12 +1,13 @@
 # argument.py
 # Author: Thomas MINIER - MIT License 2019-2020
+
 from abc import ABC, abstractmethod
 from typing import Iterable, Tuple
 
 from rdflib import BNode, URIRef
 
-from ottr.base.utils import OTTR
-from ottr.types import ExpansionResults, InputBindings, Term
+from ... ottr.base.utils import OTTR
+from ... ottr.types import ExpansionResults, InputBindings, Term
 
 
 class InstanceArgument(ABC):
@@ -135,7 +136,10 @@ class VariableArgument(InstanceArgument):
         """
         if self._value in bindings:
             term = bindings[self._value]
+
             if type(term) == BNode and bnode_suffix is not None:
                 term = BNode(f"{term}_{bnode_suffix[0]}_{bnode_suffix[1]}")
+
             return term.n3() if as_nt else term
+
         return OTTR.none

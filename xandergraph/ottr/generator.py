@@ -4,10 +4,10 @@ from typing import Dict, List, Tuple, Iterable
 
 from rdflib import URIRef, Variable
 
-from ottr.base.template import AbstractTemplate
-from ottr.parsers import parse_instances, parse_templates
-from ottr.tpl import RDF_TEMPLATES, RDFS_TEMPLATES
-from ottr.types import BoundedTerm, Triple
+from .base.template import AbstractTemplate
+from .parsers import parse_instances, parse_templates
+from .tpl import RDF_TEMPLATES, RDFS_TEMPLATES
+from .types import BoundedTerm, Triple
 
 
 class OttrInstances(object):

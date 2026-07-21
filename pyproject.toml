@@ -1,7 +1,7 @@
 [project]
 
-name = "xander-graph"
-description = "used internally for graph representation and system integration"
+name = "xandergraph"
+description = "Used internally for graph representation and system integration."
 readme = "README.md"
 license = { text = "MIT" }
 

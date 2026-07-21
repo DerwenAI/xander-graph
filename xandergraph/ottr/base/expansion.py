@@ -1,11 +1,12 @@
 # expansion.py
 # Author: Thomas MINIER - MIT License 2019-2020
+
 from typing import Dict, Iterable, Tuple
 
 from rdflib import URIRef, Variable
 
-from ottr.base.template import AbstractTemplate
-from ottr.types import ExpansionResults, InputBindings
+from ... ottr.base.template import AbstractTemplate
+from ... ottr.types import ExpansionResults, InputBindings
 
 
 class CrossTemplate(AbstractTemplate):
