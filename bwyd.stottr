@@ -5,6 +5,7 @@
 @prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
 
+
 bwyd:Recipe[
     ! ottr:IRI ?slug,
     ?title,
@@ -40,4 +41,31 @@ bwyd:RecipeDepends[
     ?closure,
 ] :: {
     ottr:Triple( ?slug, bwyd:dependsOn, ?closure ),
+} .
+
+
+bwyd:Closure[
+    ! ottr:IRI ?urn,
+    ?title,
+    ?definition,
+] :: {
+    ottr:Triple( ?urn, rdf:type, bwyd:Closure ),
+    ottr:Triple( ?urn, dcterms:title, ?title ),
+    ottr:Triple( ?urn, skos:definition ?definition ),
+} .
+
+bwyd:ClosureConsumes[
+    ! ottr:IRI ?urn,
+    ?ingredient,
+] :: {
+    ottr:Triple( ?urn, rdf:type, bwyd:Closure ),
+    ottr:Triple( ?urn, bwyd:consumes, ?ingredient ),
+} .
+
+bwyd:ClosureProduces[
+    ! ottr:IRI ?urn,
+    ?product,
+] :: {
+    ottr:Triple( ?urn, rdf:type, bwyd:Closure ),
+    ottr:Triple( ?urn, bwyd:produces, ?product ),
 } .

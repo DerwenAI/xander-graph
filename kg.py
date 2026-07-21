@@ -61,10 +61,50 @@ bwyd:RecipeDepends(
   <urn:bwyd:pacoid:panna_cotta/closure_2> ,
 ) .
 
+bwyd:Closure(
+  <urn:bwyd:pacoid:panna_cotta/closure_1> ,
+  "mix the cream"@en ,
+  "Prepare the cream filling"@en ,
+) .
 
+bwyd:ClosureConsumes(
+  <urn:bwyd:pacoid:panna_cotta/closure_1> ,
+  <urn:bwyd:ingredient:cream> ,
+) .
+
+bwyd:ClosureConsumes(
+  <urn:bwyd:pacoid:panna_cotta/closure_1> ,
+  <urn:bwyd:ingredient:granulated_sugar> ,
+) .
+
+bwyd:ClosureProduces(
+  <urn:bwyd:pacoid:panna_cotta/closure_1> ,
+  <urn:bwyd:pacoid:panna_cotta/closure_1/product/filling> ,
+) .
+
+
+bwyd:Closure(
+  <urn:bwyd:pacoid:panna_cotta/closure_2> ,
+  "chill in containers"@en ,
+  "Fill the ramekins and chill"@en ,
+) .
+
+bwyd:ClosureConsumes(
+  <urn:bwyd:pacoid:panna_cotta/closure_2> ,
+  <urn:bwyd:pacoid:panna_cotta/closure_1/product/filling> .
+) .
+
+bwyd:ClosureProduces(
+  <urn:bwyd:pacoid:panna_cotta/closure_2> ,
+  <urn:bwyd:pacoid:product:panna_cotta> .
+) .
     """.strip()
 
     kg.gen_ottr_rdf(rdf_data)
+
+#  rdfs:subClassOf <urn:bwyd:subject:dessert> , <urn:bwyd:subject:pudding> ;
+#  skos:related <urn:bwyd:keyword:italian> ;
+
 
     ## save to a file
 
