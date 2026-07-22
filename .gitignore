@@ -1,5 +1,6 @@
 # local
 *~
+corpus.ttl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

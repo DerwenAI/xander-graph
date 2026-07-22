@@ -113,40 +113,45 @@ bwyd:Product(
 ) .
     """.strip()
 
-    kg.gen_ottr_rdf(rdf_data)
-
 # need to add programmatically:
 #   rdfs:subClassOf <urn:bwyd:subject:dessert> , <urn:bwyd:subject:pudding> ;
 #   skos:related <urn:bwyd:keyword:italian> ;
 
 
-    ## save generated RDF to a file
-    ttl_path: pathlib.Path = pathlib.Path("corpus.ttl")
+    graph_dir: pathlib.Path = pathlib.Path("../bwyd-editor/graph")
+    domain_path: pathlib.Path = graph_dir / "domain.ttl"
+    search_path: pathlib.Path = graph_dir / "search.ttl"
+    pantry_path: pathlib.Path = graph_dir / "pantry.ttl"
+    shapes_path: pathlib.Path = graph_dir / "shapes.ttl"
 
-    with open(ttl_path, "w", encoding = "utf-8") as fp:
+    ## save generated RDF to a file
+    kg.gen_ottr_rdf(rdf_data)
+    corpus_path: pathlib.Path = pathlib.Path("corpus.ttl")
+
+    with open(corpus_path, "w", encoding = "utf-8") as fp:
         ttl: str = kg.graph.serialize(format = "turtle")
         fp.write(ttl)
 
 
     ## check for RDF syntax errors within the generated RDF
-    file_list: list[ str ] = [
-        "corpus.ttl",
-        "search.ttl",
-        "pantry.ttl",
-    ]
-
     graph: rdflib.Graph = rdflib.Graph()
-
-    for ttl_file in file_list:
-        graph.parse(ttl_file)
 
     tf: tempfile.NamedTemporaryFile = tempfile.NamedTemporaryFile(
         delete = False,
         suffix = ".ttl",
     )
 
+    path_list: list[ pathlib.Path ] = [
+        corpus_path,
+        search_path,
+        pantry_path,
+    ]
+
+    for ttl_path in path_list:
+        graph.parse(ttl_path.as_posix())
+
     with open(tf.name, "w", encoding = "utf-8") as fp:
-        with fileinput.input(files = file_list, encoding = "utf-8") as stream:
+        with fileinput.input(files = path_list, encoding = "utf-8") as stream:
             for line in stream:
                 fp.write(line)
 
@@ -157,8 +162,8 @@ bwyd:Product(
     ## SHACL validation
     conforms, results_graph, results_text = kg.run_shacl(
         tf.name,
-        "shapes.ttl",
-        "domain.ttl",
+        shapes_path.as_posix(),
+        domain_path.as_posix(),
     )
 
     if not conforms:
