@@ -13,7 +13,6 @@ import tempfile
 
 from icecream import ic
 import xandergraph as xg
-import pyshacl
 import rdflib
 
 
@@ -129,7 +128,7 @@ bwyd:Product(
         fp.write(ttl)
 
 
-    ## check for RDF syntax errors within the data graph
+    ## check for RDF syntax errors within the generated RDF
     file_list: list[ str ] = [
         "corpus.ttl",
         "search.ttl",
@@ -139,7 +138,6 @@ bwyd:Product(
     graph: rdflib.Graph = rdflib.Graph()
 
     for ttl_file in file_list:
-        print(ttl_file)
         graph.parse(ttl_file)
 
     tf: tempfile.NamedTemporaryFile = tempfile.NamedTemporaryFile(
@@ -152,29 +150,19 @@ bwyd:Product(
             for line in stream:
                 fp.write(line)
 
-    tf.close()
-    print(tf.name)
-
     graph = rdflib.Graph()
     graph.parse(tf.name)
 
 
     ## SHACL validation
-    conforms, results_graph, results_text = pyshacl.validate(
+    conforms, results_graph, results_text = kg.run_shacl(
         tf.name,
-        shacl_graph = "shapes.ttl",
-        ont_graph = "domain.ttl",
-        inference = "rdfs",
-        abort_on_first = False,
-        allow_infos = False,
-        allow_warnings = False,
-        meta_shacl = False,
-        advanced = False,
-        js = False,
-        debug = False,
+        "shapes.ttl",
+        "domain.ttl",
     )
 
-    print(results_text)
+    if not conforms:
+        print(results_text)
 
     tf.close()
     os.unlink(tf.name)

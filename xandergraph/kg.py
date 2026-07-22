@@ -8,6 +8,7 @@ see copyright/license https://github.com/DerwenAI/xandergraph/README.md
 
 import pathlib
 
+import pyshacl
 import rdflib
 
 from .ottr import OttrGenerator, OttrInstances
@@ -65,3 +66,32 @@ loaded OTTR templates.
 
         for s, p, o in instances.execute(as_nt = False):
             self.graph.add((s, p, o))
+
+
+    def run_shacl (
+        self,
+        data_file: str,
+        shacl_file: str,
+        onto_file: str,
+        *,
+        inference: str = "rdfs",
+        debug: bool = False,
+        ) -> tuple[ bool, rdflib.Graph, str ]:
+        """
+This wrapper calls `pySHACL`, a pure Python module which allows for
+validating RDF graphs against Shapes Constraint Language (SHACL) shape
+constraint rules.
+        """
+        return pyshacl.validate(
+            data_file,
+            shacl_graph = shacl_file,
+            ont_graph = onto_file,
+            inference = inference,
+            debug = debug,
+            abort_on_first = False,
+            allow_infos = False,
+            allow_warnings = False,
+            meta_shacl = False,
+            advanced = False,
+            js = False,
+        )
